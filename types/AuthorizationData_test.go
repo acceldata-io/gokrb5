@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/jcmturner/gokrb5/v8/iana/adtype"
-	"github.com/jcmturner/gokrb5/v8/iana/nametype"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
+	"github.com/acceldata-io/gokrb5/iana/adtype"
+	"github.com/acceldata-io/gokrb5/iana/nametype"
+	"github.com/acceldata-io/gokrb5/test/testdata"
 	"github.com/stretchr/testify/assert"
 )
 

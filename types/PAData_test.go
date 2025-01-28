@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jcmturner/gokrb5/v8/iana/patype"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
+	"github.com/acceldata-io/gokrb5/iana/patype"
+	"github.com/acceldata-io/gokrb5/test/testdata"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -45,7 +45,7 @@ func TestUnmarshalPADataSequence_empty(t *testing.T) {
 
 func TestUnmarshalPAEncTSEnc(t *testing.T) {
 	t.Parallel()
-	//Parse the test time value into a time.Time type
+	// Parse the test time value into a time.Time type
 	tt, _ := time.Parse(testdata.TEST_TIME_FORMAT, testdata.TEST_TIME)
 
 	var a PAEncTSEnc
@@ -63,7 +63,7 @@ func TestUnmarshalPAEncTSEnc(t *testing.T) {
 
 func TestUnmarshalPAEncTSEnc_nousec(t *testing.T) {
 	t.Parallel()
-	//Parse the test time value into a time.Time type
+	// Parse the test time value into a time.Time type
 	tt, _ := time.Parse(testdata.TEST_TIME_FORMAT, testdata.TEST_TIME)
 
 	var a PAEncTSEnc

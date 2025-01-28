@@ -4,8 +4,8 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"github.com/jcmturner/gokrb5/v8/crypto/common"
-	"github.com/jcmturner/gokrb5/v8/crypto/rfc8009"
+	"github.com/acceldata-io/gokrb5/crypto/common"
+	"github.com/acceldata-io/gokrb5/crypto/rfc8009"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -15,7 +15,7 @@ func TestAes128CtsHmacSha256128_StringToKey(t *testing.T) {
 	// Random 16bytes in test vector as string
 	r, _ := hex.DecodeString("10DF9DD783E5BC8ACEA1730E74355F61")
 	s := string(r)
-	var tests = []struct {
+	tests := []struct {
 		iterations uint32
 		phrase     string
 		salt       string
@@ -64,7 +64,7 @@ func TestAes128CtsHmacSha256128_VerifyIntegrity(t *testing.T) {
 	protocolBaseKey, _ := hex.DecodeString("3705d96080c17728a0e800eab6e0d23c")
 	testUsage := uint32(2)
 	var e Aes128CtsHmacSha256128
-	var tests = []struct {
+	tests := []struct {
 		kc     string
 		pt     string
 		chksum string
@@ -85,7 +85,7 @@ func TestAes128CtsHmacSha256128_Cypto(t *testing.T) {
 	t.Parallel()
 	protocolBaseKey, _ := hex.DecodeString("3705d96080c17728a0e800eab6e0d23c")
 	testUsage := uint32(2)
-	var tests = []struct {
+	tests := []struct {
 		plain      string
 		confounder string
 		ke         string
@@ -118,7 +118,7 @@ func TestAes128CtsHmacSha256128_Cypto(t *testing.T) {
 
 		// Test decryption of raw encrypted bytes
 		p, err := e.DecryptData(ke, b)
-		//Remove the confounder bytes
+		// Remove the confounder bytes
 		p = p[e.GetConfounderByteSize():]
 		if err != nil {
 			t.Errorf("decryption failed for test %v: %v", i+1, err)

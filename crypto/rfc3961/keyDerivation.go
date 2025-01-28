@@ -3,7 +3,7 @@ package rfc3961
 import (
 	"bytes"
 
-	"github.com/jcmturner/gokrb5/v8/crypto/etype"
+	"github.com/acceldata-io/gokrb5/crypto/etype"
 )
 
 const (
@@ -24,9 +24,9 @@ const (
 func DeriveRandom(key, usage []byte, e etype.EType) ([]byte, error) {
 	n := e.GetCypherBlockBitLength()
 	k := e.GetKeySeedBitLength()
-	//Ensure the usage constant is at least the size of the cypher block size. Pass it through the nfold algorithm that will "stretch" it if needs be.
+	// Ensure the usage constant is at least the size of the cypher block size. Pass it through the nfold algorithm that will "stretch" it if needs be.
 	nFoldUsage := Nfold(usage, n)
-	//k-truncate implemented by creating a byte array the size of k (k is in bits hence /8)
+	// k-truncate implemented by creating a byte array the size of k (k is in bits hence /8)
 	out := make([]byte, k/8)
 	// Keep feeding the output back into the encryption function until it is no longer short than k.
 	_, K, err := e.EncryptData(key, nFoldUsage)
@@ -117,10 +117,10 @@ func calcEvenParity(b byte) (uint8, uint8) {
 		}
 	}
 	if c%2 == 0 {
-		//Even number of 1s so set parity to 1
+		// Even number of 1s so set parity to 1
 		b = b | 1
 	} else {
-		//Odd number of 1s so set parity to 0
+		// Odd number of 1s so set parity to 0
 		b = b &^ 1
 	}
 	return lowestbit, b

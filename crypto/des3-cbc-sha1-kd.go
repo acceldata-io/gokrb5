@@ -7,17 +7,16 @@ import (
 	"errors"
 	"hash"
 
-	"github.com/jcmturner/gokrb5/v8/crypto/common"
-	"github.com/jcmturner/gokrb5/v8/crypto/rfc3961"
-	"github.com/jcmturner/gokrb5/v8/iana/chksumtype"
-	"github.com/jcmturner/gokrb5/v8/iana/etypeID"
+	"github.com/acceldata-io/gokrb5/crypto/common"
+	"github.com/acceldata-io/gokrb5/crypto/rfc3961"
+	"github.com/acceldata-io/gokrb5/iana/chksumtype"
+	"github.com/acceldata-io/gokrb5/iana/etypeID"
 )
 
-//RFC: 3961 Section 6.3
+// RFC: 3961 Section 6.3
 
 // Des3CbcSha1Kd implements Kerberos encryption type des3-cbc-hmac-sha1-kd
-type Des3CbcSha1Kd struct {
-}
+type Des3CbcSha1Kd struct{}
 
 // GetETypeID returns the EType ID number.
 func (e Des3CbcSha1Kd) GetETypeID() int32 {
@@ -46,7 +45,7 @@ func (e Des3CbcSha1Kd) GetHashFunc() func() hash.Hash {
 
 // GetMessageBlockByteSize returns the block size for the etype's messages.
 func (e Des3CbcSha1Kd) GetMessageBlockByteSize() int {
-	//For traditional CBC mode with padding, it would be the underlying cipher's block size
+	// For traditional CBC mode with padding, it would be the underlying cipher's block size
 	return des.BlockSize
 }
 

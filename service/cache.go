@@ -2,9 +2,10 @@
 package service
 
 import (
-	"github.com/jcmturner/gokrb5/v8/types"
 	"sync"
 	"time"
+
+	"github.com/acceldata-io/gokrb5/types"
 )
 
 // Replay cache is required as specified in RFC 4120 section 3.2.3
@@ -48,8 +49,10 @@ func (c *Cache) getClientEntry(cname types.PrincipalName, t time.Time) (replayCa
 }
 
 // Instance of the ServiceCache. This needs to be a singleton.
-var replayCache Cache
-var once sync.Once
+var (
+	replayCache Cache
+	once        sync.Once
+)
 
 // GetReplayCache returns a pointer to the Cache singleton.
 func GetReplayCache(d time.Duration) *Cache {

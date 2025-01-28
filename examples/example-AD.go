@@ -13,15 +13,15 @@ import (
 	"net/http/httptest"
 	"os"
 
+	"github.com/acceldata-io/gokrb5/client"
+	"github.com/acceldata-io/gokrb5/config"
+	"github.com/acceldata-io/gokrb5/credentials"
+	"github.com/acceldata-io/gokrb5/keytab"
+	"github.com/acceldata-io/gokrb5/service"
+	"github.com/acceldata-io/gokrb5/spnego"
+	"github.com/acceldata-io/gokrb5/test/testdata"
 	"github.com/gorilla/sessions"
 	"github.com/jcmturner/goidentity/v6"
-	"github.com/jcmturner/gokrb5/v8/client"
-	"github.com/jcmturner/gokrb5/v8/config"
-	"github.com/jcmturner/gokrb5/v8/credentials"
-	"github.com/jcmturner/gokrb5/v8/keytab"
-	"github.com/jcmturner/gokrb5/v8/service"
-	"github.com/jcmturner/gokrb5/v8/spnego"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
 )
 
 func main() {
@@ -97,10 +97,10 @@ func testAppHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprint(w, "</ul>\n")
 		if ADCredsJSON, ok := creds.Attributes()[credentials.AttributeKeyADCredentials]; ok {
-			//ADCreds := new(credentials.ADCredentials)
+			// ADCreds := new(credentials.ADCredentials)
 			ADCreds := ADCredsJSON.(credentials.ADCredentials)
-			//err := json.Unmarshal(aj, ADCreds)
-			//if err == nil {
+			// err := json.Unmarshal(aj, ADCreds)
+			// if err == nil {
 			// Now access the fields of the ADCredentials struct. For example:
 			fmt.Fprintf(w, "<li>EffectiveName: %v</li>\n", ADCreds.EffectiveName)
 			fmt.Fprintf(w, "<li>FullName: %v</li>\n", ADCreds.FullName)

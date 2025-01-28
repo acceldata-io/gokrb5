@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/jcmturner/gokrb5/v8/messages"
-	"github.com/jcmturner/gokrb5/v8/types"
+	"github.com/acceldata-io/gokrb5/messages"
+	"github.com/acceldata-io/gokrb5/types"
 )
 
 // Cache for service tickets held by the client.
@@ -100,7 +100,7 @@ func (c *Cache) RemoveEntry(spn string) {
 // Only a ticket that is currently valid will be returned.
 func (cl *Client) GetCachedTicket(spn string) (messages.Ticket, types.EncryptionKey, bool) {
 	if e, ok := cl.cache.getEntry(spn); ok {
-		//If within time window of ticket return it
+		// If within time window of ticket return it
 		if time.Now().UTC().After(e.StartTime) && time.Now().UTC().Before(e.EndTime) {
 			cl.Log("ticket received from cache for %s", spn)
 			return e.Ticket, e.SessionKey, true

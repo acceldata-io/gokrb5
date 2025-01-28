@@ -6,17 +6,16 @@ import (
 	"crypto/sha256"
 	"hash"
 
-	"github.com/jcmturner/gokrb5/v8/crypto/common"
-	"github.com/jcmturner/gokrb5/v8/crypto/rfc8009"
-	"github.com/jcmturner/gokrb5/v8/iana/chksumtype"
-	"github.com/jcmturner/gokrb5/v8/iana/etypeID"
+	"github.com/acceldata-io/gokrb5/crypto/common"
+	"github.com/acceldata-io/gokrb5/crypto/rfc8009"
+	"github.com/acceldata-io/gokrb5/iana/chksumtype"
+	"github.com/acceldata-io/gokrb5/iana/etypeID"
 )
 
 // RFC https://tools.ietf.org/html/rfc8009
 
 // Aes128CtsHmacSha256128 implements Kerberos encryption type aes128-cts-hmac-sha256-128
-type Aes128CtsHmacSha256128 struct {
-}
+type Aes128CtsHmacSha256128 struct{}
 
 // GetETypeID returns the EType ID number.
 func (e Aes128CtsHmacSha256128) GetETypeID() int32 {

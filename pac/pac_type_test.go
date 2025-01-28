@@ -7,9 +7,9 @@ import (
 	"log"
 	"testing"
 
-	"github.com/jcmturner/gokrb5/v8/keytab"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
-	"github.com/jcmturner/gokrb5/v8/types"
+	"github.com/acceldata-io/gokrb5/keytab"
+	"github.com/acceldata-io/gokrb5/test/testdata"
+	"github.com/acceldata-io/gokrb5/types"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -52,7 +52,7 @@ func TestPACTypeVerify(t *testing.T) {
 	pacInvalidClientInfo := pac
 	pacInvalidClientInfo.ClientInfo = nil
 
-	var pacs = []struct {
+	pacs := []struct {
 		pac PACType
 	}{
 		{pacInvalidServerSig},
@@ -65,5 +65,4 @@ func TestPACTypeVerify(t *testing.T) {
 		v, _ := s.pac.verify(key)
 		assert.False(t, v, fmt.Sprintf("Validation should have failed for test %v", i))
 	}
-
 }

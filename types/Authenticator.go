@@ -8,10 +8,10 @@ import (
 	"math/big"
 	"time"
 
+	"github.com/acceldata-io/gokrb5/asn1tools"
+	"github.com/acceldata-io/gokrb5/iana"
+	"github.com/acceldata-io/gokrb5/iana/asnAppTag"
 	"github.com/jcmturner/gofork/encoding/asn1"
-	"github.com/jcmturner/gokrb5/v8/asn1tools"
-	"github.com/jcmturner/gokrb5/v8/iana"
-	"github.com/jcmturner/gokrb5/v8/iana/asnAppTag"
 )
 
 // Authenticator - A record containing information that can be shown to have been recently generated using the session
@@ -54,7 +54,7 @@ func (a *Authenticator) GenerateSeqNumberAndSubKey(keyType int32, keySize int) e
 		return err
 	}
 	a.SeqNumber = seq.Int64() & 0x3fffffff
-	//Generate subkey value
+	// Generate subkey value
 	sk := make([]byte, keySize, keySize)
 	rand.Read(sk)
 	a.SubKey = EncryptionKey{

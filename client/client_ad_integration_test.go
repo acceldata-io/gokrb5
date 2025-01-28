@@ -6,13 +6,13 @@ import (
 	"log"
 	"testing"
 
-	"github.com/jcmturner/gokrb5/v8/config"
-	"github.com/jcmturner/gokrb5/v8/iana/etypeID"
-	"github.com/jcmturner/gokrb5/v8/iana/nametype"
-	"github.com/jcmturner/gokrb5/v8/keytab"
-	"github.com/jcmturner/gokrb5/v8/test"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
-	"github.com/jcmturner/gokrb5/v8/types"
+	"github.com/acceldata-io/gokrb5/config"
+	"github.com/acceldata-io/gokrb5/iana/etypeID"
+	"github.com/acceldata-io/gokrb5/iana/nametype"
+	"github.com/acceldata-io/gokrb5/keytab"
+	"github.com/acceldata-io/gokrb5/test"
+	"github.com/acceldata-io/gokrb5/test/testdata"
+	"github.com/acceldata-io/gokrb5/types"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -100,7 +100,6 @@ func TestClient_GetServiceTicket_AD_TRUST_USER_DOMAIN(t *testing.T) {
 	c.LibDefaults.DefaultTGSEnctypeIDs = []int32{etypeID.ETypesByName["rc4-hmac"]}
 	cl := NewWithKeytab("testuser1", "USER.GOKRB5", kt, c, DisablePAFXFAST(true))
 	err := cl.Login()
-
 	if err != nil {
 		t.Fatalf("Error on login: %v\n", err)
 	}
@@ -129,7 +128,6 @@ func TestClient_GetServiceTicket_AD_TRUST_USER_DOMAIN(t *testing.T) {
 	}
 	assert.True(t, isPAC, "Did not find PAC in service ticket")
 	assert.Equal(t, "testuser1", pac.KerbValidationInfo.EffectiveName.Value, "PAC value not parsed")
-
 }
 
 func TestClient_GetServiceTicket_AD_USER_DOMAIN(t *testing.T) {
@@ -147,7 +145,6 @@ func TestClient_GetServiceTicket_AD_USER_DOMAIN(t *testing.T) {
 	cl := NewWithKeytab("testuser1", "USER.GOKRB5", kt, c, DisablePAFXFAST(true))
 
 	err := cl.Login()
-
 	if err != nil {
 		t.Fatalf("Error on login: %v\n", err)
 	}
@@ -157,7 +154,7 @@ func TestClient_GetServiceTicket_AD_USER_DOMAIN(t *testing.T) {
 		t.Fatalf("Error getting service ticket: %v\n", err)
 	}
 	assert.Equal(t, spn, tkt.SName.PrincipalNameString())
-	//assert.Equal(t, etypeID.ETypesByName["rc4-hmac"], key.KeyType)
+	// assert.Equal(t, etypeID.ETypesByName["rc4-hmac"], key.KeyType)
 
 	b, _ = hex.DecodeString(testdata.KEYTAB_TESTUSER2_USER_GOKRB5)
 	skt := keytab.New()
@@ -176,5 +173,4 @@ func TestClient_GetServiceTicket_AD_USER_DOMAIN(t *testing.T) {
 	}
 	assert.True(t, isPAC, "Did not find PAC in service ticket")
 	assert.Equal(t, "testuser1", pac.KerbValidationInfo.EffectiveName.Value, "PAC value not parsed")
-
 }

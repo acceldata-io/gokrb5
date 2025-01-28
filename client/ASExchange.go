@@ -1,14 +1,14 @@
 package client
 
 import (
-	"github.com/jcmturner/gokrb5/v8/crypto"
-	"github.com/jcmturner/gokrb5/v8/crypto/etype"
-	"github.com/jcmturner/gokrb5/v8/iana/errorcode"
-	"github.com/jcmturner/gokrb5/v8/iana/keyusage"
-	"github.com/jcmturner/gokrb5/v8/iana/patype"
-	"github.com/jcmturner/gokrb5/v8/krberror"
-	"github.com/jcmturner/gokrb5/v8/messages"
-	"github.com/jcmturner/gokrb5/v8/types"
+	"github.com/acceldata-io/gokrb5/crypto"
+	"github.com/acceldata-io/gokrb5/crypto/etype"
+	"github.com/acceldata-io/gokrb5/iana/errorcode"
+	"github.com/acceldata-io/gokrb5/iana/keyusage"
+	"github.com/acceldata-io/gokrb5/iana/patype"
+	"github.com/acceldata-io/gokrb5/krberror"
+	"github.com/acceldata-io/gokrb5/messages"
+	"github.com/acceldata-io/gokrb5/types"
 )
 
 // ASExchange performs an AS exchange for the client to retrieve a TGT.
@@ -145,7 +145,7 @@ func setPAData(cl *Client, krberr *messages.KRBError, ASReq *messages.ASReq) err
 
 // preAuthEType establishes what encryption type to use for pre-authentication from the KRBError returned from the KDC.
 func preAuthEType(krberr *messages.KRBError) (etype etype.EType, err error) {
-	//RFC 4120 5.2.7.5 covers the preference order of ETYPE-INFO2 and ETYPE-INFO.
+	// RFC 4120 5.2.7.5 covers the preference order of ETYPE-INFO2 and ETYPE-INFO.
 	var etypeID int32
 	var pas types.PADataSequence
 	e := pas.Unmarshal(krberr.EData)

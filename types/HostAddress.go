@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/acceldata-io/gokrb5/iana/addrtype"
 	"github.com/jcmturner/gofork/encoding/asn1"
-	"github.com/jcmturner/gokrb5/v8/iana/addrtype"
 )
 
 // HostAddresses implements RFC 4120 type: https://tools.ietf.org/html/rfc4120#section-5.2.5
@@ -78,11 +78,11 @@ func LocalHostAddresses() (ha HostAddresses, err error) {
 			}
 			var a HostAddress
 			if ip.To16() == nil {
-				//neither IPv4 or IPv6
+				// neither IPv4 or IPv6
 				continue
 			}
 			if ip.To4() != nil {
-				//Is IPv4
+				// Is IPv4
 				a.AddrType = addrtype.IPv4
 				a.Address = ip.To4()
 			} else {
@@ -106,7 +106,7 @@ func HostAddressesFromNetIPs(ips []net.IP) (ha HostAddresses) {
 // HostAddressFromNetIP returns a HostAddress type from a net.IP
 func HostAddressFromNetIP(ip net.IP) HostAddress {
 	if ip.To4() != nil {
-		//Is IPv4
+		// Is IPv4
 		return HostAddress{
 			AddrType: addrtype.IPv4,
 			Address:  ip.To4(),

@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/jcmturner/gokrb5/v8/crypto"
-	"github.com/jcmturner/gokrb5/v8/iana/keyusage"
-	"github.com/jcmturner/gokrb5/v8/types"
+	"github.com/acceldata-io/gokrb5/crypto"
+	"github.com/acceldata-io/gokrb5/iana/keyusage"
+	"github.com/acceldata-io/gokrb5/types"
 	"github.com/jcmturner/rpc/v2/mstypes"
 	"github.com/jcmturner/rpc/v2/ndr"
 )
@@ -24,7 +24,7 @@ type CredentialsInfo struct {
 
 // Unmarshal bytes into the CredentialsInfo struct
 func (c *CredentialsInfo) Unmarshal(b []byte, k types.EncryptionKey) (err error) {
-	//The CredentialsInfo structure is a simple structure that is not NDR-encoded.
+	// The CredentialsInfo structure is a simple structure that is not NDR-encoded.
 	r := mstypes.NewReader(bytes.NewReader(b))
 
 	c.Version, err = r.Uint32()

@@ -8,15 +8,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jcmturner/gokrb5/v8/iana/errorcode"
-	"github.com/jcmturner/gokrb5/v8/messages"
+	"github.com/acceldata-io/gokrb5/iana/errorcode"
+	"github.com/acceldata-io/gokrb5/messages"
 )
 
 // SendToKDC performs network actions to send data to the KDC.
 func (cl *Client) sendToKDC(b []byte, realm string) ([]byte, error) {
 	var rb []byte
 	if cl.Config.LibDefaults.UDPPreferenceLimit == 1 {
-		//1 means we should always use TCP
+		// 1 means we should always use TCP
 		rb, errtcp := cl.sendKDCTCP(realm, b)
 		if errtcp != nil {
 			if e, ok := errtcp.(messages.KRBError); ok {
@@ -27,7 +27,7 @@ func (cl *Client) sendToKDC(b []byte, realm string) ([]byte, error) {
 		return rb, nil
 	}
 	if len(b) <= cl.Config.LibDefaults.UDPPreferenceLimit {
-		//Try UDP first, TCP second
+		// Try UDP first, TCP second
 		rb, errudp := cl.sendKDCUDP(realm, b)
 		if errudp != nil {
 			if e, ok := errudp.(messages.KRBError); ok && e.ErrorCode != errorcode.KRB_ERR_RESPONSE_TOO_BIG {
@@ -48,7 +48,7 @@ func (cl *Client) sendToKDC(b []byte, realm string) ([]byte, error) {
 		}
 		return rb, nil
 	}
-	//Try TCP first, UDP second
+	// Try TCP first, UDP second
 	rb, errtcp := cl.sendKDCTCP(realm, b)
 	if errtcp != nil {
 		if e, ok := errtcp.(messages.KRBError); ok {

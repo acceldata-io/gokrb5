@@ -4,8 +4,8 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"github.com/jcmturner/gokrb5/v8/crypto/common"
-	"github.com/jcmturner/gokrb5/v8/crypto/rfc3962"
+	"github.com/acceldata-io/gokrb5/crypto/common"
+	"github.com/acceldata-io/gokrb5/crypto/rfc3962"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,7 +16,7 @@ func TestAes256CtsHmacSha196_StringToKey(t *testing.T) {
 	s := string(b)
 	b, _ = hex.DecodeString("f09d849e")
 	s2 := string(b)
-	var tests = []struct {
+	tests := []struct {
 		iterations int64
 		phrase     string
 		salt       string

@@ -5,12 +5,12 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/acceldata-io/gokrb5/client"
+	"github.com/acceldata-io/gokrb5/gssapi"
+	"github.com/acceldata-io/gokrb5/messages"
+	"github.com/acceldata-io/gokrb5/service"
+	"github.com/acceldata-io/gokrb5/types"
 	"github.com/jcmturner/gofork/encoding/asn1"
-	"github.com/jcmturner/gokrb5/v8/client"
-	"github.com/jcmturner/gokrb5/v8/gssapi"
-	"github.com/jcmturner/gokrb5/v8/messages"
-	"github.com/jcmturner/gokrb5/v8/service"
-	"github.com/jcmturner/gokrb5/v8/types"
 )
 
 // https://msdn.microsoft.com/en-us/library/ms995330.aspx
@@ -282,7 +282,6 @@ func UnmarshalNegToken(b []byte) (bool, interface{}, error) {
 	default:
 		return false, nil, errors.New("unknown choice type for NegotiationToken")
 	}
-
 }
 
 // NewNegTokenInitKRB5 creates new Init negotiation token for Kerberos 5

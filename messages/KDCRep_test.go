@@ -6,14 +6,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jcmturner/gokrb5/v8/credentials"
-	"github.com/jcmturner/gokrb5/v8/iana"
-	"github.com/jcmturner/gokrb5/v8/iana/etypeID"
-	"github.com/jcmturner/gokrb5/v8/iana/msgtype"
-	"github.com/jcmturner/gokrb5/v8/iana/nametype"
-	"github.com/jcmturner/gokrb5/v8/iana/patype"
-	"github.com/jcmturner/gokrb5/v8/keytab"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
+	"github.com/acceldata-io/gokrb5/credentials"
+	"github.com/acceldata-io/gokrb5/iana"
+	"github.com/acceldata-io/gokrb5/iana/etypeID"
+	"github.com/acceldata-io/gokrb5/iana/msgtype"
+	"github.com/acceldata-io/gokrb5/iana/nametype"
+	"github.com/acceldata-io/gokrb5/iana/patype"
+	"github.com/acceldata-io/gokrb5/keytab"
+	"github.com/acceldata-io/gokrb5/test/testdata"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -204,7 +204,7 @@ func TestUnmarshalEncKDCRepPart(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Unmarshal error: %v", err)
 	}
-	//Parse the test time value into a time.Time type
+	// Parse the test time value into a time.Time type
 	tt, _ := time.Parse(testdata.TEST_TIME_FORMAT, testdata.TEST_TIME)
 
 	assert.Equal(t, int32(1), a.Key.KeyType, "Key type not as expected")
@@ -242,7 +242,7 @@ func TestUnmarshalEncKDCRepPart_optionalsNULL(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Unmarshal error: %v", err)
 	}
-	//Parse the test time value into a time.Time type
+	// Parse the test time value into a time.Time type
 	tt, _ := time.Parse(testdata.TEST_TIME_FORMAT, testdata.TEST_TIME)
 
 	assert.Equal(t, int32(1), a.Key.KeyType, "Key type not as expected")
@@ -284,7 +284,7 @@ func TestUnmarshalASRepDecodeAndDecrypt(t *testing.T) {
 	assert.Equal(t, 1, asRep.Ticket.EncPart.KVNO, "Ticket encrypted part KVNO not as expected")
 	assert.Equal(t, etypeID.ETypesByName["aes256-cts-hmac-sha1-96"], asRep.EncPart.EType, "Etype of encrypted part not as expected")
 	assert.Equal(t, 0, asRep.EncPart.KVNO, "Encrypted part KVNO not as expected")
-	//t.Log("Finished testing unecrypted parts of AS REP")
+	// t.Log("Finished testing unecrypted parts of AS REP")
 	ktb, _ := hex.DecodeString(testuser1EType18Keytab)
 	kt := keytab.New()
 	err = kt.Unmarshal(ktb)

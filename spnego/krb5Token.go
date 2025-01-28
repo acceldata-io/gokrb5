@@ -7,17 +7,17 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/acceldata-io/gokrb5/asn1tools"
+	"github.com/acceldata-io/gokrb5/client"
+	"github.com/acceldata-io/gokrb5/credentials"
+	"github.com/acceldata-io/gokrb5/gssapi"
+	"github.com/acceldata-io/gokrb5/iana/chksumtype"
+	"github.com/acceldata-io/gokrb5/iana/msgtype"
+	"github.com/acceldata-io/gokrb5/krberror"
+	"github.com/acceldata-io/gokrb5/messages"
+	"github.com/acceldata-io/gokrb5/service"
+	"github.com/acceldata-io/gokrb5/types"
 	"github.com/jcmturner/gofork/encoding/asn1"
-	"github.com/jcmturner/gokrb5/v8/asn1tools"
-	"github.com/jcmturner/gokrb5/v8/client"
-	"github.com/jcmturner/gokrb5/v8/credentials"
-	"github.com/jcmturner/gokrb5/v8/gssapi"
-	"github.com/jcmturner/gokrb5/v8/iana/chksumtype"
-	"github.com/jcmturner/gokrb5/v8/iana/msgtype"
-	"github.com/jcmturner/gokrb5/v8/krberror"
-	"github.com/jcmturner/gokrb5/v8/messages"
-	"github.com/jcmturner/gokrb5/v8/service"
-	"github.com/jcmturner/gokrb5/v8/types"
 )
 
 // GSSAPI KRB5 MechToken IDs.
@@ -189,7 +189,7 @@ func NewKRB5TokenAPREQ(cl *client.Client, tkt messages.Ticket, sessionKey types.
 
 // krb5TokenAuthenticator creates a new kerberos authenticator for kerberos MechToken
 func krb5TokenAuthenticator(creds *credentials.Credentials, flags []int) (types.Authenticator, error) {
-	//RFC 4121 Section 4.1.1
+	// RFC 4121 Section 4.1.1
 	auth, err := types.NewAuthenticator(creds.Domain(), creds.CName())
 	if err != nil {
 		return auth, krberror.Errorf(err, krberror.KRBMsgError, "error generating new authenticator")

@@ -1,10 +1,10 @@
 package types
 
 import (
-	"github.com/jcmturner/gokrb5/v8/iana/nametype"
-	"github.com/stretchr/testify/assert"
-
 	"testing"
+
+	"github.com/acceldata-io/gokrb5/iana/nametype"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPrincipalName_GetSalt(t *testing.T) {
@@ -33,5 +33,4 @@ func TestParseSPNString(t *testing.T) {
 	assert.Equal(t, "REALM.COM", realm, "realm value not as expected")
 	assert.Equal(t, nametype.KRB_NT_PRINCIPAL, pn.NameType, "name type not as expected")
 	assert.Equal(t, "www.example.com", pn.NameString[0], "second element of name string not as expected")
-
 }

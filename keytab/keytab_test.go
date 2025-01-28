@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jcmturner/gokrb5/v8/iana/etypeID"
-	"github.com/jcmturner/gokrb5/v8/iana/nametype"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
-	"github.com/jcmturner/gokrb5/v8/types"
+	"github.com/acceldata-io/gokrb5/iana/etypeID"
+	"github.com/acceldata-io/gokrb5/iana/nametype"
+	"github.com/acceldata-io/gokrb5/test/testdata"
+	"github.com/acceldata-io/gokrb5/types"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -149,7 +149,6 @@ func TestBadKeytabs(t *testing.T) {
 }
 
 func TestKeytabEntriesUser(t *testing.T) {
-
 	// Load known-good keytab generated with ktutil
 	ktutilb64 := "BQIAAABGAAEAC0VYQU1QTEUuT1JHAAR1c2VyAAAAAV5ePQAfABIAIG6I6ys5Me8XyS54Ck7kIfFBH/WxBOP3W1DdE/ntBPnGAAAAHwAAADYAAQALRVhBTVBMRS5PUkcABHVzZXIAAAABXl49AB8AEQAQm7fVug9VRBJVhEGjHyN3EgAAAB8AAAA2AAEAC0VYQU1QTEUuT1JHAAR1c2VyAAAAAV5ePQAfABcAEBENDFHhRNNvt+T54BL7uIgAAAAf"
 	ktutilbytes, err := base64.StdEncoding.DecodeString(ktutilb64)
@@ -187,7 +186,6 @@ func TestKeytabEntriesUser(t *testing.T) {
 }
 
 func TestKeytabEntriesService(t *testing.T) {
-
 	// Load known-good keytab generated with ktutil
 	ktutilb64 := "BQIAAABXAAIAC0VYQU1QTEUuT1JHAARIVFRQAA93d3cuZXhhbXBsZS5vcmcAAAABXl49ggoAEgAgOCSpM5CdiZQn1+rUtLtt6sTrg5Saw1DXJMai7vDWJ0QAAAAKAAAARwACAAtFWEFNUExFLk9SRwAESFRUUAAPd3d3LmV4YW1wbGUub3JnAAAAAV5ePYIKABEAEDpczoDyER1jscz0RWkThCMAAAAKAAAARwACAAtFWEFNUExFLk9SRwAESFRUUAAPd3d3LmV4YW1wbGUub3JnAAAAAV5ePYIKABcAELP27YfH0Th5rD+GtJkQmXQAAAAK"
 	ktutilbytes, err := base64.StdEncoding.DecodeString(ktutilb64)

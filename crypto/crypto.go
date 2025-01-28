@@ -5,11 +5,11 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/jcmturner/gokrb5/v8/crypto/etype"
-	"github.com/jcmturner/gokrb5/v8/iana/chksumtype"
-	"github.com/jcmturner/gokrb5/v8/iana/etypeID"
-	"github.com/jcmturner/gokrb5/v8/iana/patype"
-	"github.com/jcmturner/gokrb5/v8/types"
+	"github.com/acceldata-io/gokrb5/crypto/etype"
+	"github.com/acceldata-io/gokrb5/iana/chksumtype"
+	"github.com/acceldata-io/gokrb5/iana/etypeID"
+	"github.com/acceldata-io/gokrb5/iana/patype"
+	"github.com/acceldata-io/gokrb5/types"
 )
 
 // GetEtype returns an instances of the required etype struct for the etype ID.
@@ -59,7 +59,7 @@ func GetChksumEtype(id int32) (etype.EType, error) {
 	case chksumtype.KERB_CHECKSUM_HMAC_MD5:
 		var et RC4HMAC
 		return et, nil
-	//case chksumtype.KERB_CHECKSUM_HMAC_MD5_UNSIGNED:
+	// case chksumtype.KERB_CHECKSUM_HMAC_MD5_UNSIGNED:
 	//	var et RC4HMAC
 	//	return et, nil
 	default:

@@ -5,8 +5,8 @@ import (
 	"encoding/hex"
 	"errors"
 
+	"github.com/acceldata-io/gokrb5/crypto/etype"
 	"github.com/jcmturner/gofork/x/crypto/pbkdf2"
-	"github.com/jcmturner/gokrb5/v8/crypto/etype"
 )
 
 const (
@@ -35,9 +35,9 @@ func StringToKeyIter(secret, salt string, iterations int64, e etype.EType) ([]by
 
 // S2KparamsToItertions converts the string representation of iterations to an integer
 func S2KparamsToItertions(s2kparams string) (int64, error) {
-	//The s2kparams string should be hex string representing 4 bytes
-	//The 4 bytes represent a number in big endian order
-	//If the value is zero then the number of iterations should be 4,294,967,296 (2^32)
+	// The s2kparams string should be hex string representing 4 bytes
+	// The 4 bytes represent a number in big endian order
+	// If the value is zero then the number of iterations should be 4,294,967,296 (2^32)
 	var i uint32
 	if len(s2kparams) != 8 {
 		return int64(s2kParamsZero), errors.New("invalid s2kparams length")

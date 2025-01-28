@@ -5,19 +5,19 @@ import (
 	"log"
 	"time"
 
+	"github.com/acceldata-io/gokrb5/asn1tools"
+	"github.com/acceldata-io/gokrb5/crypto"
+	"github.com/acceldata-io/gokrb5/iana"
+	"github.com/acceldata-io/gokrb5/iana/adtype"
+	"github.com/acceldata-io/gokrb5/iana/asnAppTag"
+	"github.com/acceldata-io/gokrb5/iana/errorcode"
+	"github.com/acceldata-io/gokrb5/iana/flags"
+	"github.com/acceldata-io/gokrb5/iana/keyusage"
+	"github.com/acceldata-io/gokrb5/keytab"
+	"github.com/acceldata-io/gokrb5/krberror"
+	"github.com/acceldata-io/gokrb5/pac"
+	"github.com/acceldata-io/gokrb5/types"
 	"github.com/jcmturner/gofork/encoding/asn1"
-	"github.com/jcmturner/gokrb5/v8/asn1tools"
-	"github.com/jcmturner/gokrb5/v8/crypto"
-	"github.com/jcmturner/gokrb5/v8/iana"
-	"github.com/jcmturner/gokrb5/v8/iana/adtype"
-	"github.com/jcmturner/gokrb5/v8/iana/asnAppTag"
-	"github.com/jcmturner/gokrb5/v8/iana/errorcode"
-	"github.com/jcmturner/gokrb5/v8/iana/flags"
-	"github.com/jcmturner/gokrb5/v8/iana/keyusage"
-	"github.com/jcmturner/gokrb5/v8/keytab"
-	"github.com/jcmturner/gokrb5/v8/krberror"
-	"github.com/jcmturner/gokrb5/v8/pac"
-	"github.com/jcmturner/gokrb5/v8/types"
 )
 
 // Reference: https://www.ietf.org/rfc/rfc4120.txt
@@ -127,8 +127,8 @@ func unmarshalTicket(b []byte) (t Ticket, err error) {
 
 // UnmarshalTicketsSequence returns a slice of Tickets from a raw ASN1 value.
 func unmarshalTicketsSequence(in asn1.RawValue) ([]Ticket, error) {
-	//This is a workaround to a asn1 decoding issue in golang - https://github.com/golang/go/issues/17321. It's not pretty I'm afraid
-	//We pull out raw values from the larger raw value (that is actually the data of the sequence of raw values) and track our position moving along the data.
+	// This is a workaround to a asn1 decoding issue in golang - https://github.com/golang/go/issues/17321. It's not pretty I'm afraid
+	// We pull out raw values from the larger raw value (that is actually the data of the sequence of raw values) and track our position moving along the data.
 	b := in.Bytes
 	// Ignore the head of the asn1 stream (1 byte for tag and those for the length) as this is what tells us its a sequence but we're handling it ourselves
 	p := 1 + asn1tools.GetNumberBytesInLengthHeader(in.Bytes)
@@ -179,7 +179,7 @@ func MarshalTicketSequence(tkts []Ticket) (asn1.RawValue, error) {
 	btkts = append([]byte{byte(32 + asn1.TagSequence)}, btkts...)
 	raw.Bytes = btkts
 	// If we need to create the full bytes then identifier octet is "context-specific" = 128 + "constructed" + 32 + the wrapping explicit tag (11)
-	//fmt.Fprintf(os.Stderr, "mRaw fb: %v\n", raw.FullBytes)
+	// fmt.Fprintf(os.Stderr, "mRaw fb: %v\n", raw.FullBytes)
 	return raw, nil
 }
 

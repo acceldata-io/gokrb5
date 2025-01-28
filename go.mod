@@ -1,4 +1,4 @@
-module github.com/jcmturner/gokrb5/v8
+module github.com/acceldata-io/gokrb5
 
 go 1.16
 

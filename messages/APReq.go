@@ -4,17 +4,17 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/acceldata-io/gokrb5/asn1tools"
+	"github.com/acceldata-io/gokrb5/crypto"
+	"github.com/acceldata-io/gokrb5/iana"
+	"github.com/acceldata-io/gokrb5/iana/asnAppTag"
+	"github.com/acceldata-io/gokrb5/iana/errorcode"
+	"github.com/acceldata-io/gokrb5/iana/keyusage"
+	"github.com/acceldata-io/gokrb5/iana/msgtype"
+	"github.com/acceldata-io/gokrb5/keytab"
+	"github.com/acceldata-io/gokrb5/krberror"
+	"github.com/acceldata-io/gokrb5/types"
 	"github.com/jcmturner/gofork/encoding/asn1"
-	"github.com/jcmturner/gokrb5/v8/asn1tools"
-	"github.com/jcmturner/gokrb5/v8/crypto"
-	"github.com/jcmturner/gokrb5/v8/iana"
-	"github.com/jcmturner/gokrb5/v8/iana/asnAppTag"
-	"github.com/jcmturner/gokrb5/v8/iana/errorcode"
-	"github.com/jcmturner/gokrb5/v8/iana/keyusage"
-	"github.com/jcmturner/gokrb5/v8/iana/msgtype"
-	"github.com/jcmturner/gokrb5/v8/keytab"
-	"github.com/jcmturner/gokrb5/v8/krberror"
-	"github.com/jcmturner/gokrb5/v8/types"
 )
 
 type marshalAPReq struct {
@@ -171,8 +171,8 @@ func (a *APReq) Verify(kt *keytab.Keytab, d time.Duration, cAddr types.HostAddre
 
 	// Check client's address is listed in the client addresses in the ticket
 	if len(a.Ticket.DecryptedEncPart.CAddr) > 0 {
-		//If client addresses are present check if any of them match the source IP that sent the APReq
-		//If there is no match return KRB_AP_ERR_BADADDR error.
+		// If client addresses are present check if any of them match the source IP that sent the APReq
+		// If there is no match return KRB_AP_ERR_BADADDR error.
 		if !types.HostAddressesContains(a.Ticket.DecryptedEncPart.CAddr, cAddr) {
 			return false, NewKRBError(a.Ticket.SName, a.Ticket.Realm, errorcode.KRB_AP_ERR_BADADDR, "client address not within the list contained in the service ticket")
 		}

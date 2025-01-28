@@ -6,18 +6,17 @@ import (
 	"crypto/sha1"
 	"hash"
 
-	"github.com/jcmturner/gokrb5/v8/crypto/common"
-	"github.com/jcmturner/gokrb5/v8/crypto/rfc3961"
-	"github.com/jcmturner/gokrb5/v8/crypto/rfc3962"
-	"github.com/jcmturner/gokrb5/v8/iana/chksumtype"
-	"github.com/jcmturner/gokrb5/v8/iana/etypeID"
+	"github.com/acceldata-io/gokrb5/crypto/common"
+	"github.com/acceldata-io/gokrb5/crypto/rfc3961"
+	"github.com/acceldata-io/gokrb5/crypto/rfc3962"
+	"github.com/acceldata-io/gokrb5/iana/chksumtype"
+	"github.com/acceldata-io/gokrb5/iana/etypeID"
 )
 
 // RFC 3962
 
 // Aes256CtsHmacSha96 implements Kerberos encryption type aes256-cts-hmac-sha1-96
-type Aes256CtsHmacSha96 struct {
-}
+type Aes256CtsHmacSha96 struct{}
 
 // GetETypeID returns the EType ID number.
 func (e Aes256CtsHmacSha96) GetETypeID() int32 {

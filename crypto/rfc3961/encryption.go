@@ -9,8 +9,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/jcmturner/gokrb5/v8/crypto/common"
-	"github.com/jcmturner/gokrb5/v8/crypto/etype"
+	"github.com/acceldata-io/gokrb5/crypto/common"
+	"github.com/acceldata-io/gokrb5/crypto/etype"
 )
 
 // DES3EncryptData encrypts the data provided using DES3 and methods specific to the etype provided.
@@ -25,7 +25,7 @@ func DES3EncryptData(key, data []byte, e etype.EType) ([]byte, []byte, error) {
 		return nil, nil, fmt.Errorf("error creating cipher: %v", err)
 	}
 
-	//RFC 3961: initial cipher state      All bits zero
+	// RFC 3961: initial cipher state      All bits zero
 	ivz := make([]byte, des.BlockSize)
 
 	ct := make([]byte, len(data))
@@ -37,7 +37,7 @@ func DES3EncryptData(key, data []byte, e etype.EType) ([]byte, []byte, error) {
 // DES3EncryptMessage encrypts the message provided using DES3 and methods specific to the etype provided.
 // The encrypted data is concatenated with its integrity hash to create an encrypted message.
 func DES3EncryptMessage(key, message []byte, usage uint32, e etype.EType) ([]byte, []byte, error) {
-	//confounder
+	// confounder
 	c := make([]byte, e.GetConfounderByteSize())
 	_, err := rand.Read(c)
 	if err != nil {
@@ -92,7 +92,7 @@ func DES3DecryptData(key, data []byte, e etype.EType) ([]byte, error) {
 // DES3DecryptMessage decrypts the message provided using DES3 and methods specific to the etype provided.
 // The integrity of the message is also verified.
 func DES3DecryptMessage(key, ciphertext []byte, usage uint32, e etype.EType) ([]byte, error) {
-	//Derive the key
+	// Derive the key
 	k, err := e.DeriveKey(key, common.GetUsageKe(usage))
 	if err != nil {
 		return nil, fmt.Errorf("error deriving key: %v", err)
@@ -102,11 +102,11 @@ func DES3DecryptMessage(key, ciphertext []byte, usage uint32, e etype.EType) ([]
 	if err != nil {
 		return nil, fmt.Errorf("error decrypting: %v", err)
 	}
-	//Verify checksum
+	// Verify checksum
 	if !e.VerifyIntegrity(key, ciphertext, b, usage) {
 		return nil, errors.New("error decrypting: integrity verification failed")
 	}
-	//Remove the confounder bytes
+	// Remove the confounder bytes
 	return b[e.GetConfounderByteSize():], nil
 }
 

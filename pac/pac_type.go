@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/jcmturner/gokrb5/v8/crypto"
-	"github.com/jcmturner/gokrb5/v8/iana/keyusage"
-	"github.com/jcmturner/gokrb5/v8/types"
+	"github.com/acceldata-io/gokrb5/crypto"
+	"github.com/acceldata-io/gokrb5/iana/keyusage"
+	"github.com/acceldata-io/gokrb5/types"
 	"github.com/jcmturner/rpc/v2/mstypes"
 )
 
@@ -94,7 +94,7 @@ func (pac *PACType) ProcessPACInfoBuffers(key types.EncryptionKey, l *log.Logger
 		switch buf.ULType {
 		case infoTypeKerbValidationInfo:
 			if pac.KerbValidationInfo != nil {
-				//Must ignore subsequent buffers of this type
+				// Must ignore subsequent buffers of this type
 				continue
 			}
 			var k KerbValidationInfo
@@ -120,7 +120,7 @@ func (pac *PACType) ProcessPACInfoBuffers(key types.EncryptionKey, l *log.Logger
 			//pac.CredentialsInfo = &k
 		case infoTypePACServerSignatureData:
 			if pac.ServerChecksum != nil {
-				//Must ignore subsequent buffers of this type
+				// Must ignore subsequent buffers of this type
 				continue
 			}
 			var k SignatureData
@@ -132,7 +132,7 @@ func (pac *PACType) ProcessPACInfoBuffers(key types.EncryptionKey, l *log.Logger
 			pac.ServerChecksum = &k
 		case infoTypePACKDCSignatureData:
 			if pac.KDCChecksum != nil {
-				//Must ignore subsequent buffers of this type
+				// Must ignore subsequent buffers of this type
 				continue
 			}
 			var k SignatureData
@@ -144,7 +144,7 @@ func (pac *PACType) ProcessPACInfoBuffers(key types.EncryptionKey, l *log.Logger
 			pac.KDCChecksum = &k
 		case infoTypePACClientInfo:
 			if pac.ClientInfo != nil {
-				//Must ignore subsequent buffers of this type
+				// Must ignore subsequent buffers of this type
 				continue
 			}
 			var k ClientInfo
@@ -155,7 +155,7 @@ func (pac *PACType) ProcessPACInfoBuffers(key types.EncryptionKey, l *log.Logger
 			pac.ClientInfo = &k
 		case infoTypeS4UDelegationInfo:
 			if pac.S4UDelegationInfo != nil {
-				//Must ignore subsequent buffers of this type
+				// Must ignore subsequent buffers of this type
 				continue
 			}
 			var k S4UDelegationInfo
@@ -167,7 +167,7 @@ func (pac *PACType) ProcessPACInfoBuffers(key types.EncryptionKey, l *log.Logger
 			pac.S4UDelegationInfo = &k
 		case infoTypeUPNDNSInfo:
 			if pac.UPNDNSInfo != nil {
-				//Must ignore subsequent buffers of this type
+				// Must ignore subsequent buffers of this type
 				continue
 			}
 			var k UPNDNSInfo
@@ -179,7 +179,7 @@ func (pac *PACType) ProcessPACInfoBuffers(key types.EncryptionKey, l *log.Logger
 			pac.UPNDNSInfo = &k
 		case infoTypePACClientClaimsInfo:
 			if pac.ClientClaimsInfo != nil || len(p) < 1 {
-				//Must ignore subsequent buffers of this type
+				// Must ignore subsequent buffers of this type
 				continue
 			}
 			var k ClientClaimsInfo
@@ -191,7 +191,7 @@ func (pac *PACType) ProcessPACInfoBuffers(key types.EncryptionKey, l *log.Logger
 			pac.ClientClaimsInfo = &k
 		case infoTypePACDeviceInfo:
 			if pac.DeviceInfo != nil {
-				//Must ignore subsequent buffers of this type
+				// Must ignore subsequent buffers of this type
 				continue
 			}
 			var k DeviceInfo
@@ -203,7 +203,7 @@ func (pac *PACType) ProcessPACInfoBuffers(key types.EncryptionKey, l *log.Logger
 			pac.DeviceInfo = &k
 		case infoTypePACDeviceClaimsInfo:
 			if pac.DeviceClaimsInfo != nil {
-				//Must ignore subsequent buffers of this type
+				// Must ignore subsequent buffers of this type
 				continue
 			}
 			var k DeviceClaimsInfo

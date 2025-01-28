@@ -11,12 +11,12 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/acceldata-io/gokrb5/keytab"
+	"github.com/acceldata-io/gokrb5/service"
+	"github.com/acceldata-io/gokrb5/spnego"
+	"github.com/acceldata-io/gokrb5/test/testdata"
 	"github.com/gorilla/sessions"
 	"github.com/jcmturner/goidentity/v6"
-	"github.com/jcmturner/gokrb5/v8/keytab"
-	"github.com/jcmturner/gokrb5/v8/service"
-	"github.com/jcmturner/gokrb5/v8/spnego"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
 )
 
 const (
@@ -24,7 +24,7 @@ const (
 )
 
 func main() {
-	//defer profile.Start(profile.TraceProfile).Stop()
+	// defer profile.Start(profile.TraceProfile).Stop()
 	// Create logger
 	l := log.New(os.Stderr, "GOKRB5 Service: ", log.Ldate|log.Ltime|log.Lshortfile)
 

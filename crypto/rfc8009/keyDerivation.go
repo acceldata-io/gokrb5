@@ -6,8 +6,8 @@ import (
 	"encoding/hex"
 	"errors"
 
-	"github.com/jcmturner/gokrb5/v8/crypto/etype"
-	"github.com/jcmturner/gokrb5/v8/iana/etypeID"
+	"github.com/acceldata-io/gokrb5/crypto/etype"
+	"github.com/acceldata-io/gokrb5/iana/etypeID"
 	"golang.org/x/crypto/pbkdf2"
 )
 
@@ -89,7 +89,7 @@ func StringToPBKDF2(secret, salt string, iterations int, e etype.EType) []byte {
 
 // KDF_HMAC_SHA2 key derivation: https://tools.ietf.org/html/rfc8009#section-3
 func KDF_HMAC_SHA2(protocolKey, label, context []byte, kl int, e etype.EType) []byte {
-	//k: Length in bits of the key to be outputted, expressed in big-endian binary representation in 4 bytes.
+	// k: Length in bits of the key to be outputted, expressed in big-endian binary representation in 4 bytes.
 	k := make([]byte, 4, 4)
 	binary.BigEndian.PutUint32(k, uint32(kl))
 
@@ -126,8 +126,8 @@ func S2KparamsToItertions(s2kparams string) (int, error) {
 		return s2kParamsZero, errors.New("Invalid s2kparams, cannot decode string to bytes")
 	}
 	i = binary.BigEndian.Uint32(b)
-	//buf := bytes.NewBuffer(b)
-	//err = binary.Read(buf, binary.BigEndian, &i)
+	// buf := bytes.NewBuffer(b)
+	// err = binary.Read(buf, binary.BigEndian, &i)
 	if err != nil {
 		return s2kParamsZero, errors.New("Invalid s2kparams, cannot convert to big endian int32")
 	}

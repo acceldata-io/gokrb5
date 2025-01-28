@@ -1,8 +1,8 @@
 package kadmin
 
 import (
+	"github.com/acceldata-io/gokrb5/types"
 	"github.com/jcmturner/gofork/encoding/asn1"
-	"github.com/jcmturner/gokrb5/v8/types"
 )
 
 // ChangePasswdData is the payload to a password change message.
@@ -18,6 +18,6 @@ func (c *ChangePasswdData) Marshal() ([]byte, error) {
 	if err != nil {
 		return []byte{}, err
 	}
-	//b = asn1tools.AddASNAppTag(b, asnAppTag.)
+	// b = asn1tools.AddASNAppTag(b, asnAppTag.)
 	return b, nil
 }

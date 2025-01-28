@@ -4,27 +4,27 @@ import (
 	"bytes"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"os/exec"
 	"os/user"
 	"runtime"
+	"strings"
+	"sync"
 	"testing"
 	"time"
 
-	"fmt"
-	"github.com/jcmturner/gokrb5/v8/client"
-	"github.com/jcmturner/gokrb5/v8/config"
-	"github.com/jcmturner/gokrb5/v8/credentials"
-	"github.com/jcmturner/gokrb5/v8/iana/etypeID"
-	"github.com/jcmturner/gokrb5/v8/keytab"
-	"github.com/jcmturner/gokrb5/v8/spnego"
-	"github.com/jcmturner/gokrb5/v8/test"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
+	"github.com/acceldata-io/gokrb5/client"
+	"github.com/acceldata-io/gokrb5/config"
+	"github.com/acceldata-io/gokrb5/credentials"
+	"github.com/acceldata-io/gokrb5/iana/etypeID"
+	"github.com/acceldata-io/gokrb5/keytab"
+	"github.com/acceldata-io/gokrb5/spnego"
+	"github.com/acceldata-io/gokrb5/test"
+	"github.com/acceldata-io/gokrb5/test/testdata"
 	"github.com/stretchr/testify/assert"
-	"strings"
-	"sync"
 )
 
 func TestClient_SuccessfulLogin_Keytab(t *testing.T) {
@@ -38,7 +38,7 @@ func TestClient_SuccessfulLogin_Keytab(t *testing.T) {
 	kt := keytab.New()
 	kt.Unmarshal(b)
 	c, _ := config.NewFromString(testdata.KRB5_CONF)
-	var tests = []string{
+	tests := []string{
 		testdata.KDC_PORT_TEST_GOKRB5,
 		testdata.KDC_PORT_TEST_GOKRB5_OLD,
 		testdata.KDC_PORT_TEST_GOKRB5_LASTEST,
@@ -62,7 +62,7 @@ func TestClient_SuccessfulLogin_Password(t *testing.T) {
 		addr = testdata.KDC_IP_TEST_GOKRB5
 	}
 	c, _ := config.NewFromString(testdata.KRB5_CONF)
-	var tests = []string{
+	tests := []string{
 		testdata.KDC_PORT_TEST_GOKRB5,
 		testdata.KDC_PORT_TEST_GOKRB5_OLD,
 		testdata.KDC_PORT_TEST_GOKRB5_LASTEST,
@@ -111,7 +111,7 @@ func TestClient_ASExchange_TGSExchange_EncTypes_Keytab(t *testing.T) {
 		addr = testdata.KDC_IP_TEST_GOKRB5
 	}
 	c.Realms[0].KDC = []string{addr + ":" + testdata.KDC_PORT_TEST_GOKRB5_LASTEST}
-	var tests = []string{
+	tests := []string{
 		"des3-cbc-sha1-kd",
 		"aes128-cts-hmac-sha1-96",
 		"aes256-cts-hmac-sha1-96",
@@ -148,7 +148,7 @@ func TestClient_ASExchange_TGSExchange_EncTypes_Password(t *testing.T) {
 		addr = testdata.KDC_IP_TEST_GOKRB5
 	}
 	c.Realms[0].KDC = []string{addr + ":" + testdata.KDC_PORT_TEST_GOKRB5_LASTEST}
-	var tests = []string{
+	tests := []string{
 		"des3-cbc-sha1-kd",
 		"aes128-cts-hmac-sha1-96",
 		"aes256-cts-hmac-sha1-96",
@@ -266,7 +266,8 @@ func TestClient_NetworkTryNextKDC(t *testing.T) {
 	}
 	// Two out fo three times this should fail the first time.
 	// So will run login twice to expect at least once the first time it will be to a bad KDC
-	c.Realms[0].KDC = []string{testdata.KDC_IP_TEST_GOKRB5_BADADDR + ":88",
+	c.Realms[0].KDC = []string{
+		testdata.KDC_IP_TEST_GOKRB5_BADADDR + ":88",
 		testdata.KDC_IP_TEST_GOKRB5_BADADDR + ":88",
 		addr + ":" + testdata.KDC_PORT_TEST_GOKRB5,
 	}
@@ -308,7 +309,7 @@ func TestClient_GetServiceTicket(t *testing.T) {
 	assert.Equal(t, spn, tkt.SName.PrincipalNameString())
 	assert.Equal(t, int32(18), key.KeyType)
 
-	//Check cache use - should get the same values back again
+	// Check cache use - should get the same values back again
 	tkt2, key2, err := cl.GetServiceTicket(spn)
 	if err != nil {
 		t.Fatalf("error getting service ticket: %v\n", err)
@@ -344,7 +345,7 @@ func TestClient_GetServiceTicket_CanonicalizeTrue(t *testing.T) {
 	assert.Equal(t, spn, tkt.SName.PrincipalNameString())
 	assert.Equal(t, int32(18), key.KeyType)
 
-	//Check cache use - should get the same values back again
+	// Check cache use - should get the same values back again
 	tkt2, key2, err := cl.GetServiceTicket(spn)
 	if err != nil {
 		t.Fatalf("error getting service ticket: %v\n", err)
@@ -530,7 +531,6 @@ func TestClient_GetServiceTicket_Trusted_Resource_Domain(t *testing.T) {
 	c.LibDefaults.DefaultTGSEnctypeIDs = []int32{etypeID.ETypesByName["aes256-cts-hmac-sha1-96"]}
 
 	err := cl.Login()
-
 	if err != nil {
 		t.Fatalf("error on login: %v\n", err)
 	}
@@ -642,7 +642,7 @@ func TestGetServiceTicketFromCCacheTGT(t *testing.T) {
 	assert.Equal(t, spn, tkt.SName.PrincipalNameString())
 	assert.Equal(t, int32(18), key.KeyType)
 
-	//Check cache use - should get the same values back again
+	// Check cache use - should get the same values back again
 	tkt2, key2, err := cl.GetServiceTicket(spn)
 	if err != nil {
 		t.Fatalf("error getting service ticket: %v\n", err)

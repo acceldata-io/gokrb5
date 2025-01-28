@@ -9,10 +9,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/jcmturner/gokrb5/v8/client"
-	"github.com/jcmturner/gokrb5/v8/config"
-	"github.com/jcmturner/gokrb5/v8/keytab"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
+	"github.com/acceldata-io/gokrb5/client"
+	"github.com/acceldata-io/gokrb5/config"
+	"github.com/acceldata-io/gokrb5/keytab"
+	"github.com/acceldata-io/gokrb5/test/testdata"
 )
 
 const (
@@ -41,7 +41,7 @@ const (
 func main() {
 	l := log.New(os.Stderr, "GOKRB5 Client: ", log.LstdFlags)
 
-	//defer profile.Start(profile.TraceProfile).Stop()
+	// defer profile.Start(profile.TraceProfile).Stop()
 	// Load the keytab
 	kb, _ := hex.DecodeString(testdata.KEYTAB_TESTUSER2_TEST_GOKRB5)
 	kt := keytab.New()

@@ -6,9 +6,9 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/acceldata-io/gokrb5/crypto/common"
+	"github.com/acceldata-io/gokrb5/crypto/etype"
 	"github.com/jcmturner/aescts/v2"
-	"github.com/jcmturner/gokrb5/v8/crypto/common"
-	"github.com/jcmturner/gokrb5/v8/crypto/etype"
 )
 
 // EncryptData encrypts the data provided using methods specific to the etype provided as defined in RFC 3962.
@@ -26,7 +26,7 @@ func EncryptMessage(key, message []byte, usage uint32, e etype.EType) ([]byte, [
 	if len(key) != e.GetKeyByteSize() {
 		return []byte{}, []byte{}, fmt.Errorf("incorrect keysize: expected: %v actual: %v", e.GetKeyByteSize(), len(key))
 	}
-	//confounder
+	// confounder
 	c := make([]byte, e.GetConfounderByteSize())
 	_, err := rand.Read(c)
 	if err != nil {
@@ -70,7 +70,7 @@ func DecryptData(key, data []byte, e etype.EType) ([]byte, error) {
 // DecryptMessage decrypts the message provided using the methods specific to the etype provided as defined in RFC 3962.
 // The integrity of the message is also verified.
 func DecryptMessage(key, ciphertext []byte, usage uint32, e etype.EType) ([]byte, error) {
-	//Derive the key
+	// Derive the key
 	k, err := e.DeriveKey(key, common.GetUsageKe(usage))
 	if err != nil {
 		return nil, fmt.Errorf("error deriving key: %v", err)
@@ -80,10 +80,10 @@ func DecryptMessage(key, ciphertext []byte, usage uint32, e etype.EType) ([]byte
 	if err != nil {
 		return nil, err
 	}
-	//Verify checksum
+	// Verify checksum
 	if !e.VerifyIntegrity(key, ciphertext, b, usage) {
 		return nil, errors.New("integrity verification failed")
 	}
-	//Remove the confounder bytes
+	// Remove the confounder bytes
 	return b[e.GetConfounderByteSize():], nil
 }

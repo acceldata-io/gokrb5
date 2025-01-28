@@ -3,7 +3,7 @@ package types
 import (
 	"strings"
 
-	"github.com/jcmturner/gokrb5/v8/iana/nametype"
+	"github.com/acceldata-io/gokrb5/iana/nametype"
 )
 
 // Reference: https://www.ietf.org/rfc/rfc4120.txt
@@ -38,7 +38,7 @@ func (pn PrincipalName) Equal(n PrincipalName) bool {
 	if len(pn.NameString) != len(n.NameString) {
 		return false
 	}
-	//https://tools.ietf.org/html/rfc4120#section-6.2 - the name type is not significant when checking for equivalence
+	// https://tools.ietf.org/html/rfc4120#section-6.2 - the name type is not significant when checking for equivalence
 	for i, s := range pn.NameString {
 		if n.NameString[i] != s {
 			return false

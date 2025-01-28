@@ -6,16 +6,16 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jcmturner/gokrb5/v8/iana"
-	"github.com/jcmturner/gokrb5/v8/iana/adtype"
-	"github.com/jcmturner/gokrb5/v8/iana/nametype"
-	"github.com/jcmturner/gokrb5/v8/test/testdata"
+	"github.com/acceldata-io/gokrb5/iana"
+	"github.com/acceldata-io/gokrb5/iana/adtype"
+	"github.com/acceldata-io/gokrb5/iana/nametype"
+	"github.com/acceldata-io/gokrb5/test/testdata"
 	"github.com/stretchr/testify/assert"
 )
 
 func unmarshalAuthenticatorTest(t *testing.T, v string) Authenticator {
 	var a Authenticator
-	//t.Logf("Starting unmarshal tests of %s", v)
+	// t.Logf("Starting unmarshal tests of %s", v)
 	b, err := hex.DecodeString(v)
 	if err != nil {
 		t.Fatalf("Test vector read error: %v", err)
@@ -26,10 +26,11 @@ func unmarshalAuthenticatorTest(t *testing.T, v string) Authenticator {
 	}
 	return a
 }
+
 func TestUnmarshalAuthenticator(t *testing.T) {
 	t.Parallel()
 	a := unmarshalAuthenticatorTest(t, testdata.MarshaledKRB5authenticator)
-	//Parse the test time value into a time.Time type
+	// Parse the test time value into a time.Time type
 	tt, _ := time.Parse(testdata.TEST_TIME_FORMAT, testdata.TEST_TIME)
 
 	assert.Equal(t, iana.PVNO, a.AVNO, "Authenticator version number not as expected")
@@ -53,7 +54,7 @@ func TestUnmarshalAuthenticator(t *testing.T) {
 func TestUnmarshalAuthenticator_optionalsempty(t *testing.T) {
 	t.Parallel()
 	a := unmarshalAuthenticatorTest(t, testdata.MarshaledKRB5authenticatorOptionalsEmpty)
-	//Parse the test time value into a time.Time type
+	// Parse the test time value into a time.Time type
 	tt, _ := time.Parse(testdata.TEST_TIME_FORMAT, testdata.TEST_TIME)
 
 	assert.Equal(t, iana.PVNO, a.AVNO, "Authenticator version number not as expected")
@@ -68,7 +69,7 @@ func TestUnmarshalAuthenticator_optionalsempty(t *testing.T) {
 func TestUnmarshalAuthenticator_optionalsNULL(t *testing.T) {
 	t.Parallel()
 	a := unmarshalAuthenticatorTest(t, testdata.MarshaledKRB5authenticatorOptionalsNULL)
-	//Parse the test time value into a time.Time type
+	// Parse the test time value into a time.Time type
 	tt, _ := time.Parse(testdata.TEST_TIME_FORMAT, testdata.TEST_TIME)
 
 	assert.Equal(t, iana.PVNO, a.AVNO, "Authenticator version number not as expected")

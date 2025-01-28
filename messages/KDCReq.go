@@ -10,19 +10,19 @@ import (
 	"math/big"
 	"time"
 
+	"github.com/acceldata-io/gokrb5/asn1tools"
+	"github.com/acceldata-io/gokrb5/config"
+	"github.com/acceldata-io/gokrb5/crypto"
+	"github.com/acceldata-io/gokrb5/iana"
+	"github.com/acceldata-io/gokrb5/iana/asnAppTag"
+	"github.com/acceldata-io/gokrb5/iana/flags"
+	"github.com/acceldata-io/gokrb5/iana/keyusage"
+	"github.com/acceldata-io/gokrb5/iana/msgtype"
+	"github.com/acceldata-io/gokrb5/iana/nametype"
+	"github.com/acceldata-io/gokrb5/iana/patype"
+	"github.com/acceldata-io/gokrb5/krberror"
+	"github.com/acceldata-io/gokrb5/types"
 	"github.com/jcmturner/gofork/encoding/asn1"
-	"github.com/jcmturner/gokrb5/v8/asn1tools"
-	"github.com/jcmturner/gokrb5/v8/config"
-	"github.com/jcmturner/gokrb5/v8/crypto"
-	"github.com/jcmturner/gokrb5/v8/iana"
-	"github.com/jcmturner/gokrb5/v8/iana/asnAppTag"
-	"github.com/jcmturner/gokrb5/v8/iana/flags"
-	"github.com/jcmturner/gokrb5/v8/iana/keyusage"
-	"github.com/jcmturner/gokrb5/v8/iana/msgtype"
-	"github.com/jcmturner/gokrb5/v8/iana/nametype"
-	"github.com/jcmturner/gokrb5/v8/iana/patype"
-	"github.com/jcmturner/gokrb5/v8/krberror"
-	"github.com/jcmturner/gokrb5/v8/types"
 )
 
 type marshalKDCReq struct {
@@ -419,7 +419,7 @@ func (k *KDCReqBody) Marshal() ([]byte, error) {
 	if err != nil {
 		return b, krberror.Errorf(err, krberror.EncodingError, "error in marshaling KDC request body additional tickets")
 	}
-	//The asn1.rawValue needs the tag setting on it for where it is in the KDCReqBody
+	// The asn1.rawValue needs the tag setting on it for where it is in the KDCReqBody
 	rawtkts.Tag = 11
 	if len(rawtkts.Bytes) > 0 {
 		m.AdditionalTickets = rawtkts
